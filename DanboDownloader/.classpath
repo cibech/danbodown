@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
+	<classpathentry kind="lib" path="swing2swt.jar"/>
+	<classpathentry kind="lib" path="D:/SDK/Java/lib/httpcomponents-client-4.2/lib/httpclient-4.2.jar"/>
+	<classpathentry kind="lib" path="D:/SDK/Java/lib/httpcomponents-client-4.2/lib/httpcore-4.2.jar"/>
+	<classpathentry kind="lib" path="D:/SDK/Java/lib/httpcomponents-client-4.2/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/SDK/Java/lib/httpcomponents-client-4.2/lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="D:/SDK/Java/lib/google-gson-2.2.1/gson-2.2.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
