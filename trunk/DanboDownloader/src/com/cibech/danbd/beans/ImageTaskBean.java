@@ -1,5 +1,7 @@
 package com.cibech.danbd.beans;
 
+import com.cibech.danbd.logic.DanbooruAPILogic;
+
 public class ImageTaskBean {
 
 	private String image_url;
@@ -13,7 +15,7 @@ public class ImageTaskBean {
 		image_size = post.getFile_size();
 		
 		image_filename = image_url.substring(image_url.lastIndexOf('/') + 1);
-		image_fullpath = "C:\\" + image_filename;
+		image_fullpath = DanbooruAPILogic.GetBasePath() + image_filename;
 		file_md5 = post.getMd5();
 	}
 	

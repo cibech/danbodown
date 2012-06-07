@@ -18,10 +18,11 @@ public class DanbooruAPILogic {
 	
 	private static String _strUserName = "";		//当前用户名
 	private static String _strPassword = "";		//当前密码HASH
+	private static int _nPageLimit = 5;				//单页数量
+	private static String _strBasePath = "C:\\";	//默认路径
 	
 	private final static String THIS_PROTOCAL = "http"; 
 	private final static String BASE_URL = "danbooru.donmai.us";
-	private final static String PAGE_LIMIT = "5";
 	
 	//POST地址和参数
 	private final static String POST_URL = "/post/index.json";
@@ -32,10 +33,16 @@ public class DanbooruAPILogic {
 	//用户认证参数
 	private final static String LOGIN_KEY = "login";
 	private final static String PASS_KEY = "password_hash";
+	
+	public static String GetBasePath() {
+		return _strBasePath;
+	}
 
 	//生成认证信息
-	public void SetUserInfo(String strUserName, String strPass) {
+	public void SetUserInfo(String strUserName, String strPass, String strBase, int nPageLimit) {
 		
+		_strBasePath = (strBase.lastIndexOf(0) == '\\' ? strBase : strBase + '\\');
+		_nPageLimit = nPageLimit;
 		_strUserName = strUserName;
 		_strPassword = DanTools.getStringSHA1("choujin-steiner--" + strPass + "--");
 	}
@@ -52,7 +59,7 @@ public class DanbooruAPILogic {
 			builder.setScheme(THIS_PROTOCAL).setHost(BASE_URL).setPath(POST_URL)
 				.setParameter(LOGIN_KEY, _strUserName)
 				.setParameter(PASS_KEY, _strPassword)
-			    .setParameter(POST_PARA_LIMIT, PAGE_LIMIT)
+			    .setParameter(POST_PARA_LIMIT, String.valueOf(_nPageLimit))
 			    .setParameter(POST_PARA_PAGE, String.valueOf(nPage))
 			    .setParameter(POST_PARA_TAG, strTag);			
 		

@@ -37,10 +37,15 @@ public class DownloadListWorker implements Runnable {
 				//如果提示成功，检查MD5
 				if(nRet == AppConsts.RESULT_OK) {
 				
-					if(!taskbean.getFile_md5().equalsIgnoreCase(DanTools.getFileMd5(taskbean.getImage_fullpath()))) {
+					String fileMd5 = DanTools.getFileMd5(taskbean.getImage_fullpath());
+					if(!taskbean.getFile_md5().equalsIgnoreCase(fileMd5)) {
 						//校验出错
 						
 					}
+				}
+				// 文件已存在
+				else if(nRet == AppConsts.ERROR_FILE_EXIST) {
+					
 				}
 			}
 			
