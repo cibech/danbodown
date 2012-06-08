@@ -14,6 +14,15 @@ public class AppConsts {
 	public final static String MAINFORM_POSTPERPAGE = "每页数量";
 	public final static String MAINFORM_LOCALPATH = "本地路径";
 	public final static String MAINFORM_BROWSE = "浏览";
+	public final static String MAINFORM_GETFILELIST = "刷新列表";
+	
+	public final static String MAINFORM_TALBE_FILEINDEX = "序号";
+	public final static String MAINFORM_TALBE_FILENAME = "文件名";
+	public final static String MAINFORM_TALBE_FILESIZE = "体积(MB)";
+	public final static String MAINFORM_TALBE_PROGRESS = "进度";
+	
+	public final static String MAINFORM_TALBE_TIME = "时间";
+	public final static String MAINFORM_TALBE_LOG = "事件";
 	
 	public final static String DERECTORY_BROWSE = "选择一个文件夹";
 	public final static String DERECTORY_BROWSE_MSG = "选择或者新建一个文件夹来存放下载文件";

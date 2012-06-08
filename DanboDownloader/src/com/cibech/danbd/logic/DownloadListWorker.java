@@ -4,6 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import com.cibech.danbd.beans.ImageTaskBean;
 import com.cibech.danbd.consts.AppConsts;
+import com.cibech.danbd.gui.MainFrame;
 import com.cibech.danbd.util.DanTools;
 
 public class DownloadListWorker implements Runnable {
@@ -40,12 +41,23 @@ public class DownloadListWorker implements Runnable {
 					String fileMd5 = DanTools.getFileMd5(taskbean.getImage_fullpath());
 					if(!taskbean.getFile_md5().equalsIgnoreCase(fileMd5)) {
 						//校验出错
-						
+						MainFrame.AddLogInformation(this, "下载完成文件 " + taskbean.getImage_filename() + " MD5校验出错");
+					} else {
+						MainFrame.AddLogInformation(this, "下载完成文件 " + taskbean.getImage_filename() + " MD5一致");
 					}
 				}
 				// 文件已存在
 				else if(nRet == AppConsts.ERROR_FILE_EXIST) {
 					
+					String fileMd5 = DanTools.getFileMd5(taskbean.getImage_fullpath());
+					if(!taskbean.getFile_md5().equalsIgnoreCase(fileMd5)) {
+						//校验出错
+						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 但 MD5校验出错");
+					} else {
+						
+						//校验一致
+						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 且MD5校验一致");
+					}
 				}
 			}
 			
