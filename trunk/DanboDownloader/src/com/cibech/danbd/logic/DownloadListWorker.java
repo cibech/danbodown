@@ -33,6 +33,8 @@ public class DownloadListWorker implements Runnable {
 			ImageTaskBean taskbean = _queueTask.poll();
 			if(taskbean != null) {
 				
+				MainFrame.AddLogInformation(this, "开始下载项目 " + taskbean.getImage_filename());
+				
 				//开始任务
 				Integer nRet = _logic.DownloadPostImage(taskbean);
 				//如果提示成功，检查MD5
