@@ -15,6 +15,10 @@ public class ImageTaskBean {
 	private String image_fullpath;
 	private String file_md5;
 	
+	public static void ResetTask() {
+		taskcount = 0;
+	}
+	
 	public ImageTaskBean(ImagePost post) {
 		
 		image_url = post.getFile_url();

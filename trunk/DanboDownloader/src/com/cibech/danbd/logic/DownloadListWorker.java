@@ -55,19 +55,15 @@ public class DownloadListWorker implements Runnable {
 				// 文件已存在
 				else if(nRet == AppConsts.ERROR_FILE_EXIST) {
 					
-					String fileMd5 = DanTools.getFileMd5(taskbean.getImage_fullpath());
-					if(!taskbean.getFile_md5().equalsIgnoreCase(fileMd5)) {
-						//校验出错
-						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 但 MD5校验不一致");
-						
-						MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FAILED);
-					} else {
-						
-						//校验一致
-						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 且MD5校验一致");
-						
-						MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FINISH);
-					}
+					//校验出错
+					MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 且尝试删除失败");
+					
+					MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FAILED);
+				}
+				else {
+					MainFrame.AddLogInformation(this, "文件 " + taskbean.getImage_filename() + " 下载失败");
+					
+					MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FAILED);
 				}
 			}
 			
@@ -95,5 +91,14 @@ public class DownloadListWorker implements Runnable {
 	
 	public void MarkQuit() {
 		_bNeedEnd = true;
+	}
+	
+	//清空队列
+	public void ClearQueue() {
+		
+		_queueTask.clear();
+		
+		//重置Task
+		ImageTaskBean.ResetTask();
 	}
 }
