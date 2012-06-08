@@ -5,19 +5,23 @@ import com.cibech.danbd.logic.DanbooruAPILogic;
 public class ImageTaskBean {
 
 	private static int taskcount = 0;
+	
 	private int taskid;
 	private String image_url;
 	private int image_size;
+	private int width;
+	private int height;
 	private String image_filename;
 	private String image_fullpath;
 	private String file_md5;
 	
 	public ImageTaskBean(ImagePost post) {
 		
-		taskid = taskcount++;
-		
 		image_url = post.getFile_url();
 		image_size = post.getFile_size();
+		
+		width = post.getWidth();
+		height = post.getHeight();
 		
 		image_filename = image_url.substring(image_url.lastIndexOf('/') + 1);
 		image_fullpath = DanbooruAPILogic.GetBasePath() + image_filename;
@@ -61,5 +65,25 @@ public class ImageTaskBean {
 
 	public void setTaskid(int taskid) {
 		this.taskid = taskid;
+	}
+	
+	public void GenTaskId() {
+		taskid = taskcount++;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

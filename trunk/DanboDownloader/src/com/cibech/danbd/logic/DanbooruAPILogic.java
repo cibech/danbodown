@@ -110,7 +110,7 @@ public class DanbooruAPILogic {
 		try {			
 			//构建请求		
 			HttpGet httpget = new HttpGet(bean.getImage_url());
-			ImageFileDownloadHandler fileHandler = new ImageFileDownloadHandler(bean.getImage_fullpath());
+			ImageFileDownloadHandler fileHandler = new ImageFileDownloadHandler(bean.getImage_fullpath(), bean.getTaskid());
             nRet = httpclient.execute(httpget, fileHandler);
              
 		} catch (IOException e) {

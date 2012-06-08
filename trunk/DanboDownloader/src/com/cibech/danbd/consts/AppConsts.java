@@ -4,6 +4,10 @@ public class AppConsts {
 
 	public final static String APP_NAME = "Danbooru Downloader";
 	
+	//任务状态定义
+	public static final int STATUS_FINISH = 0;
+	public static final int STATUS_FAILED = 1;
+	
 	public final static String MAINFORM_LOGINGROUP = "参数设定";
 	public final static String MAINFORM_USERNAME = "用户名";
 	public final static String MAINFORM_PASS = "密码";
@@ -21,6 +25,7 @@ public class AppConsts {
 	public final static String MAINFORM_TALBE_FILEINDEX = "序号";
 	public final static String MAINFORM_TALBE_FILENAME = "文件名";
 	public final static String MAINFORM_TALBE_FILESIZE = "体积(MB)";
+	public final static String MAINFORM_TALBE_RESOLUTION = "分辨率";
 	public final static String MAINFORM_TALBE_PROGRESS = "进度";
 	
 	public final static String MAINFORM_TALBE_TIME = "时间";

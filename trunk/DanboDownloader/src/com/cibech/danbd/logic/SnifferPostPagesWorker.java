@@ -50,6 +50,9 @@ public class SnifferPostPagesWorker implements Runnable {
 						}
 					}
 					
+					//产生TaskID，即Table的Index
+					task.GenTaskId();
+					
 					//添加到下载线程
 					MainFrame.AddImageDownloadTask(task);
 					
