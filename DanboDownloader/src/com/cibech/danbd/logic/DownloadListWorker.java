@@ -44,8 +44,12 @@ public class DownloadListWorker implements Runnable {
 					if(!taskbean.getFile_md5().equalsIgnoreCase(fileMd5)) {
 						//校验出错
 						MainFrame.AddLogInformation(this, "下载完成文件 " + taskbean.getImage_filename() + " MD5校验出错");
+						
+						MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FAILED);
 					} else {
 						MainFrame.AddLogInformation(this, "下载完成文件 " + taskbean.getImage_filename() + " MD5一致");
+						
+						MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FINISH);
 					}
 				}
 				// 文件已存在
@@ -54,11 +58,15 @@ public class DownloadListWorker implements Runnable {
 					String fileMd5 = DanTools.getFileMd5(taskbean.getImage_fullpath());
 					if(!taskbean.getFile_md5().equalsIgnoreCase(fileMd5)) {
 						//校验出错
-						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 但 MD5校验出错");
+						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 但 MD5校验不一致");
+						
+						MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FAILED);
 					} else {
 						
 						//校验一致
 						MainFrame.AddLogInformation(this, "同名文件 " + taskbean.getImage_filename() + " 已存在, 且MD5校验一致");
+						
+						MainFrame.MarkTaskStatus(taskbean.getTaskid(), AppConsts.STATUS_FINISH);
 					}
 				}
 			}

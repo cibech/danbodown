@@ -13,14 +13,17 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 
 import com.cibech.danbd.consts.AppConsts;
+import com.cibech.danbd.gui.MainFrame;
 
 public class ImageFileDownloadHandler implements ResponseHandler<Integer> {
 	
 	private String _strFilePath;
-	private final static int READ_BUFF_SIZE = 16*1024;		//16K
+	private int _nTaskId;
+	private final static int READ_BUFF_SIZE = 32*1024;		//32K
 	
-	public ImageFileDownloadHandler(String strPath) {
+	public ImageFileDownloadHandler(String strPath, int nTaskId) {
 		_strFilePath = strPath;
+		_nTaskId = nTaskId;
 	}
 
 	@Override
@@ -79,6 +82,9 @@ public class ImageFileDownloadHandler implements ResponseHandler<Integer> {
         			fileWriter.write(pBuff, 0, nThisRead);
         			nReadedSize += nThisRead;
         		}
+        		
+        		//更新界面进度
+        		MainFrame.UpdateImageProgress(_nTaskId, nReadedSize*100.0f/nFileSize);
             }
             
             is.close();

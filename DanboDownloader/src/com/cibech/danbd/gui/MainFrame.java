@@ -31,6 +31,13 @@ import org.eclipse.swt.widgets.TableColumn;
 
 public class MainFrame {
 	
+	//定义Table列
+	private static final int COL_FILE_INEDEX = 0;
+	private static final int COL_FILE_IMAGENAME = 1;
+	private static final int COL_FILE_SIZE = 2;
+	private static final int COL_FILE_RESOLUTION = 3;
+	private static final int COL_FILE_PROGRESS = 4;
+	
 	private static DownloadListWorker _runDownImage;
 	private static Thread _snifferThread = null;
 	private static Display _display;
@@ -216,8 +223,12 @@ public class MainFrame {
 		tblclmnFileSize.setWidth(80);
 		tblclmnFileSize.setText(AppConsts.MAINFORM_TALBE_FILESIZE);
 		
-		TableColumn tblclmnProgress = new TableColumn(tableFileList, SWT.CENTER);
-		tblclmnProgress.setWidth(200);
+		TableColumn tblclmnResolution = new TableColumn(tableFileList, SWT.RIGHT);
+		tblclmnResolution.setWidth(100);
+		tblclmnResolution.setText(AppConsts.MAINFORM_TALBE_RESOLUTION);
+		
+		TableColumn tblclmnProgress = new TableColumn(tableFileList, SWT.RIGHT);
+		tblclmnProgress.setWidth(66);
 		tblclmnProgress.setText(AppConsts.MAINFORM_TALBE_PROGRESS);
 		new Label(groupLogin, SWT.NONE);
 		
@@ -343,10 +354,11 @@ public class MainFrame {
                 TableItem item = new TableItem(tableFileList, SWT.NULL);
                 nCurTableItemCount++;
                 
-                item.setText(0, String.valueOf(nCurTableItemCount));
-                item.setText(1, task.getImage_filename());
-                item.setText(2, String.format("%.2f M", task.getImage_size() / 1024.0 / 1024.0));
-                item.setText(3, "0.00%");
+                item.setText(COL_FILE_INEDEX, String.valueOf(nCurTableItemCount));
+                item.setText(COL_FILE_IMAGENAME, task.getImage_filename());
+                item.setText(COL_FILE_SIZE, String.format("%.2f M", task.getImage_size() / 1024.0 / 1024.0));
+                item.setText(COL_FILE_RESOLUTION, String.valueOf(task.getWidth()) + " x " + String.valueOf(task.getHeight()));
+                item.setText(COL_FILE_PROGRESS, "0.00 %");                
             }	
 		});
 	}
@@ -423,5 +435,59 @@ public class MainFrame {
 		}
 		
 		return null;
+	}
+	
+	//更新文件下载进度
+	public static void UpdateImageProgress(final int nTaskId, final float fProgres) {
+		
+		//异步更新
+		_display.asyncExec(new Runnable() {
+
+            public void run() {
+            	
+            	//检查界面
+                if(tableFileList.isDisposed()) return;
+                
+                try {
+                	
+                	TableItem item = tableFileList.getItem(nTaskId);
+                	
+                	//更新进度
+                	item.setText(COL_FILE_PROGRESS, String.format("%.2f", fProgres) + " %");
+                	
+                } catch(IllegalArgumentException e) {
+                
+                	e.printStackTrace();
+                }
+            }	
+		});
+	}
+	
+	//设置单条任务完成
+	public static void MarkTaskStatus(final int nTaskId, final int nStatus) {
+		//异步更新
+		_display.asyncExec(new Runnable() {
+
+            public void run() {
+            	
+            	//检查界面
+                if(tableFileList.isDisposed()) return;
+                
+                try {
+                	
+                	TableItem item = tableFileList.getItem(nTaskId);
+                	
+                	if(nStatus == AppConsts.STATUS_FINISH) {
+                		item.setBackground(_display.getSystemColor(SWT.COLOR_GREEN));
+                	} else if(nStatus == AppConsts.STATUS_FAILED) {
+                		item.setBackground(_display.getSystemColor(SWT.COLOR_RED));
+                	}
+                	
+                } catch(IllegalArgumentException e) {
+                
+                	e.printStackTrace();
+                }
+            }	
+		});
 	}
 }
