@@ -4,6 +4,8 @@ import com.cibech.danbd.logic.DanbooruAPILogic;
 
 public class ImageTaskBean {
 
+	private static int taskcount = 0;
+	private int taskid;
 	private String image_url;
 	private int image_size;
 	private String image_filename;
@@ -11,6 +13,9 @@ public class ImageTaskBean {
 	private String file_md5;
 	
 	public ImageTaskBean(ImagePost post) {
+		
+		taskid = taskcount++;
+		
 		image_url = post.getFile_url();
 		image_size = post.getFile_size();
 		
@@ -48,5 +53,13 @@ public class ImageTaskBean {
 	}
 	public void setFile_md5(String file_md5) {
 		this.file_md5 = file_md5;
+	}
+
+	public int getTaskid() {
+		return taskid;
+	}
+
+	public void setTaskid(int taskid) {
+		this.taskid = taskid;
 	}
 }
