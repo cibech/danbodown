@@ -12,6 +12,7 @@ public class AppConsts {
 	public final static String MAINFORM_USERNAME = "用户名";
 	public final static String MAINFORM_PASS = "密码";
 	public final static String MAINFORM_LOGIN = "添加";
+	public final static String MAINFORM_CLEAR = "清空";
 	public final static String MAINFORM_TAGS = "Tags";
 	public final static String MAINFORM_STARTPAGE = "起始页码";
 	public final static String MAINFORM_ENDPAGE = "终止页码";

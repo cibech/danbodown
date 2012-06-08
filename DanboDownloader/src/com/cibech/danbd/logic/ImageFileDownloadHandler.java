@@ -20,6 +20,7 @@ public class ImageFileDownloadHandler implements ResponseHandler<Integer> {
 	private String _strFilePath;
 	private int _nTaskId;
 	private final static int READ_BUFF_SIZE = 32*1024;		//32K
+	private final static int FAIL_RETY_COUNT = 10;
 	
 	public ImageFileDownloadHandler(String strPath, int nTaskId) {
 		_strFilePath = strPath;
@@ -59,7 +60,12 @@ public class ImageFileDownloadHandler implements ResponseHandler<Integer> {
 			//开始读取并写入图片，检查是否存在
 			File picFile = new File(_strFilePath);
             if(picFile.exists()) {
-                return AppConsts.ERROR_FILE_EXIST;
+            	
+            	//如果存在则尝试删除，因为MD5比较失败
+            	if(!picFile.delete()) {
+            		//如果删除失败，则毫无办法
+            		return AppConsts.ERROR_FILE_EXIST;
+            	}
             }
             
             //创建读写对象
@@ -67,6 +73,7 @@ public class ImageFileDownloadHandler implements ResponseHandler<Integer> {
             InputStream is = respEntity.getContent();
             
             //循环读取
+            int nFailCount = 0;
             byte[] pBuff = new byte[READ_BUFF_SIZE];
             while(nReadedSize < nFileSize) {
             	//尝试阻塞读取
@@ -75,6 +82,15 @@ public class ImageFileDownloadHandler implements ResponseHandler<Integer> {
         		//出现异常
         		if(nThisRead < 0) {
         			break;
+        		}
+        		
+        		if(nThisRead == 0) {
+        			nFailCount++;
+        			
+        			//最大重试次数
+        			if(nFailCount >= FAIL_RETY_COUNT) {
+        				break;
+        			}
         		}
         		
         		//写入文件

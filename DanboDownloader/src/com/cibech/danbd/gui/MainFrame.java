@@ -193,10 +193,14 @@ public class MainFrame {
 					String strBasePath = textBasePath.getText();
 					
 					//清空列表
-			        _lstImages.clear(); 
+			        _lstImages.clear();
+			        
+			        AddLogInformation(this, "开始遍历目下下的图片文件，请等待...");
 			        
 			        //刷新
 					refreshFileList(strBasePath, _lstImages);
+					
+					AddLogInformation(this, "目录遍历完成，共发现 " + String.valueOf(_lstImages.size()) + " 个文件");
 				}
 			}
 		});
@@ -230,7 +234,6 @@ public class MainFrame {
 		TableColumn tblclmnProgress = new TableColumn(tableFileList, SWT.RIGHT);
 		tblclmnProgress.setWidth(66);
 		tblclmnProgress.setText(AppConsts.MAINFORM_TALBE_PROGRESS);
-		new Label(groupLogin, SWT.NONE);
 		
 		//设置参数
 		Button btnSetParameter = new Button(groupLogin, SWT.NONE);
@@ -264,6 +267,27 @@ public class MainFrame {
 		});
 		
 		btnSetParameter.setText(AppConsts.MAINFORM_LOGIN);
+		
+		//清理Task列表
+		Button btnClear = new Button(groupLogin, SWT.NONE);
+		btnClear.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				//左键按下
+				if(e.button == 1) {
+					
+					//暂停并清除任务
+					_runDownImage.PauseQueue();
+					_runDownImage.ClearQueue();
+					
+					//清除界面
+					tableFileList.removeAll();
+					nCurTableItemCount = 0;
+				}
+			}
+		});
+		btnClear.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		btnClear.setText(AppConsts.MAINFORM_CLEAR);
 		
 		//开始任务
 		Button btnBeginTask = new Button(groupLogin, SWT.NONE);
