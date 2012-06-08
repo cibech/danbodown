@@ -25,9 +25,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -61,15 +58,13 @@ public class MainFrame {
 		_mainShell = new Shell(_display);
 		_mainShell.setSize(860, 614);
 		_mainShell.setText(AppConsts.APP_NAME);
-		_mainShell.setLayout(new FormLayout());
+		_mainShell.setLayout(new GridLayout(1, false));
 		
 		//登录框
 		Group groupLogin = new Group(_mainShell, SWT.NONE);
-		FormData fd_groupLogin = new FormData();
-		fd_groupLogin.top = new FormAttachment(0, 10);
-		fd_groupLogin.left = new FormAttachment(0, 10);
-		fd_groupLogin.right = new FormAttachment(0, 842);
-		groupLogin.setLayoutData(fd_groupLogin);
+		GridData gd_groupLogin = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		gd_groupLogin.widthHint = 835;
+		groupLogin.setLayoutData(gd_groupLogin);
 		groupLogin.setText(AppConsts.MAINFORM_LOGINGROUP);
 		groupLogin.setLayout(new GridLayout(12, false));
 		
@@ -107,40 +102,40 @@ public class MainFrame {
 		
 		textTags = new Text(groupLogin, SWT.BORDER);
 		GridData gd_textTags = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_textTags.widthHint = 102;
+		gd_textTags.widthHint = 132;
 		textTags.setLayoutData(gd_textTags);
 		
 		Label lblNewLabel = new Label(groupLogin, SWT.NONE);
 		lblNewLabel.setAlignment(SWT.RIGHT);
-		GridData gd_lblNewLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_lblNewLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_lblNewLabel.widthHint = 57;
 		lblNewLabel.setLayoutData(gd_lblNewLabel);
 		lblNewLabel.setText(AppConsts.MAINFORM_STARTPAGE);
 		
 		textStartPage = new Text(groupLogin, SWT.BORDER);
-		GridData gd_textStartPage = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_textStartPage.widthHint = 61;
+		GridData gd_textStartPage = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_textStartPage.widthHint = 48;
 		textStartPage.setLayoutData(gd_textStartPage);
 		
 		Label label = new Label(groupLogin, SWT.NONE);
 		label.setAlignment(SWT.RIGHT);
-		GridData gd_label = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_label = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_label.widthHint = 53;
 		label.setLayoutData(gd_label);
 		label.setText(AppConsts.MAINFORM_ENDPAGE);
 		
 		textEndPage = new Text(groupLogin, SWT.BORDER);
 		GridData gd_textEndPage = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_textEndPage.widthHint = 42;
+		gd_textEndPage.widthHint = 43;
 		textEndPage.setLayoutData(gd_textEndPage);
 		
 		Label lblCountPerpage = new Label(groupLogin, SWT.NONE);
 		lblCountPerpage.setAlignment(SWT.RIGHT);
-		lblCountPerpage.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblCountPerpage.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		lblCountPerpage.setText(AppConsts.MAINFORM_POSTPERPAGE);
 		
 		textCountPerPage = new Text(groupLogin, SWT.BORDER);
-		GridData gd_textCountPerPage = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_textCountPerPage = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_textCountPerPage.widthHint = 34;
 		textCountPerPage.setLayoutData(gd_textCountPerPage);
 		
@@ -149,7 +144,9 @@ public class MainFrame {
 		lblPath.setText(AppConsts.MAINFORM_LOCALPATH);
 		
 		textBasePath = new Text(groupLogin, SWT.BORDER);
-		textBasePath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 7, 1));
+		GridData gd_textBasePath = new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1);
+		gd_textBasePath.widthHint = 421;
+		textBasePath.setLayoutData(gd_textBasePath);
 		
 		//浏览文件夹
 		Button btnBrowseBase = new Button(groupLogin, SWT.NONE);
@@ -172,36 +169,10 @@ public class MainFrame {
 				}
 			}
 		});
-		btnBrowseBase.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		GridData gd_btnBrowseBase = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_btnBrowseBase.widthHint = 43;
+		btnBrowseBase.setLayoutData(gd_btnBrowseBase);
 		btnBrowseBase.setText(AppConsts.MAINFORM_BROWSE);
-		
-		//文件列表
-		tableFileList = new Table(_mainShell, SWT.BORDER | SWT.FULL_SELECTION);
-		fd_groupLogin.bottom = new FormAttachment(100, -506);
-		FormData fd_tableFileList = new FormData();
-		fd_tableFileList.top = new FormAttachment(groupLogin, 6);
-		fd_tableFileList.right = new FormAttachment(groupLogin, 0, SWT.RIGHT);
-		fd_tableFileList.left = new FormAttachment(0, 10);
-		tableFileList.setLayoutData(fd_tableFileList);
-		tableFileList.setHeaderVisible(true);
-		tableFileList.setLinesVisible(true);
-		
-		TableColumn tblclmnFileIndex = new TableColumn(tableFileList, SWT.LEFT);
-		tblclmnFileIndex.setWidth(50);
-		tblclmnFileIndex.setText(AppConsts.MAINFORM_TALBE_FILEINDEX);
-		
-		TableColumn tblclmnFileName = new TableColumn(tableFileList, SWT.CENTER);
-		tblclmnFileName.setWidth(300);
-		tblclmnFileName.setText(AppConsts.MAINFORM_TALBE_FILENAME);
-		
-		TableColumn tblclmnFileSize = new TableColumn(tableFileList, SWT.RIGHT);
-		tblclmnFileSize.setWidth(80);
-		tblclmnFileSize.setText(AppConsts.MAINFORM_TALBE_FILESIZE);
-		
-		TableColumn tblclmnProgress = new TableColumn(tableFileList, SWT.CENTER);
-		tblclmnProgress.setWidth(200);
-		tblclmnProgress.setText(AppConsts.MAINFORM_TALBE_PROGRESS);
-		fd_tableFileList.bottom = new FormAttachment(100, -142);
 		
 		//获取文件列表
 		Button btnGetFileList = new Button(groupLogin, SWT.NONE);
@@ -222,13 +193,38 @@ public class MainFrame {
 				}
 			}
 		});
-		btnGetFileList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		btnGetFileList.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnGetFileList.setText(AppConsts.MAINFORM_GETFILELIST);
+		
+		//文件列表
+		tableFileList = new Table(_mainShell, SWT.BORDER | SWT.FULL_SELECTION);
+		GridData gd_tableFileList = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_tableFileList.heightHint = 313;
+		tableFileList.setLayoutData(gd_tableFileList);
+		tableFileList.setHeaderVisible(true);
+		tableFileList.setLinesVisible(true);
+		
+		TableColumn tblclmnFileIndex = new TableColumn(tableFileList, SWT.LEFT);
+		tblclmnFileIndex.setWidth(50);
+		tblclmnFileIndex.setText(AppConsts.MAINFORM_TALBE_FILEINDEX);
+		
+		TableColumn tblclmnFileName = new TableColumn(tableFileList, SWT.CENTER);
+		tblclmnFileName.setWidth(250);
+		tblclmnFileName.setText(AppConsts.MAINFORM_TALBE_FILENAME);
+		
+		TableColumn tblclmnFileSize = new TableColumn(tableFileList, SWT.RIGHT);
+		tblclmnFileSize.setWidth(80);
+		tblclmnFileSize.setText(AppConsts.MAINFORM_TALBE_FILESIZE);
+		
+		TableColumn tblclmnProgress = new TableColumn(tableFileList, SWT.CENTER);
+		tblclmnProgress.setWidth(200);
+		tblclmnProgress.setText(AppConsts.MAINFORM_TALBE_PROGRESS);
+		new Label(groupLogin, SWT.NONE);
 		
 		//设置参数
 		Button btnSetParameter = new Button(groupLogin, SWT.NONE);
-		GridData gd_btnSetParameter = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
-		gd_btnSetParameter.widthHint = 87;
+		GridData gd_btnSetParameter = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_btnSetParameter.widthHint = 51;
 		btnSetParameter.setLayoutData(gd_btnSetParameter);
 		btnSetParameter.addMouseListener(new MouseAdapter() {
 			@Override
@@ -258,22 +254,55 @@ public class MainFrame {
 		
 		btnSetParameter.setText(AppConsts.MAINFORM_LOGIN);
 		
+		//开始任务
+		Button btnBeginTask = new Button(groupLogin, SWT.NONE);
+		btnBeginTask.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				
+				if(e.button == 1) {
+					
+					//开始下载
+					_runDownImage.StartQueue();
+				}
+			}
+		});
+		GridData gd_btnBeginTask = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_btnBeginTask.widthHint = 46;
+		btnBeginTask.setLayoutData(gd_btnBeginTask);
+		btnBeginTask.setText(AppConsts.MAINFORM_START);
+		
+		//暂停任务
+		Button btnPauseTask = new Button(groupLogin, SWT.NONE);
+		btnPauseTask.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				
+					if(e.button == 1) {
+					
+					//开始下载
+					_runDownImage.PauseQueue();
+				}
+			}
+		});
+		GridData gd_btnPauseTask = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_btnPauseTask.widthHint = 37;
+		btnPauseTask.setLayoutData(gd_btnPauseTask);
+		btnPauseTask.setText(AppConsts.MAINFORM_PAUSE);
+		
 		listLog = new Table(_mainShell, SWT.BORDER | SWT.FULL_SELECTION);
-		FormData fd_listLog = new FormData();
-		fd_listLog.right = new FormAttachment(groupLogin, 0, SWT.RIGHT);
-		fd_listLog.bottom = new FormAttachment(tableFileList, 132, SWT.BOTTOM);
-		fd_listLog.top = new FormAttachment(tableFileList, 6);
-		fd_listLog.left = new FormAttachment(0, 10);
-		listLog.setLayoutData(fd_listLog);
+		GridData gd_listLog = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd_listLog.heightHint = 138;
+		listLog.setLayoutData(gd_listLog);
 		listLog.setHeaderVisible(true);
 		listLog.setLinesVisible(true);
 		
 		TableColumn tableColumnTime = new TableColumn(listLog, SWT.NONE);
-		tableColumnTime.setWidth(200);
+		tableColumnTime.setWidth(150);
 		tableColumnTime.setText(AppConsts.MAINFORM_TALBE_TIME);
 		
 		TableColumn tableColumnLog = new TableColumn(listLog, SWT.NONE);
-		tableColumnLog.setWidth(400);
+		tableColumnLog.setWidth(650);
 		tableColumnLog.setText(AppConsts.MAINFORM_TALBE_LOG);
 		
 		_mainShell.open();
@@ -298,9 +327,6 @@ public class MainFrame {
 		//建立并运行下载线程
 		_runDownImage = new DownloadListWorker();
 		new Thread(_runDownImage).start();
-		
-		//开始工作
-		_runDownImage.StartQueue();
 	}
 	
 	//界面程序
