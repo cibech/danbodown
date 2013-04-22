@@ -28,6 +28,7 @@ public class DanbooruAPILogic {
 	
 	private final static String THIS_PROTOCAL = "http"; 
 	private final static String BASE_URL = "danbooru.donmai.us";
+	private final static String BASE_URL_HTTP = "http://danbooru.donmai.us";
 	
 	//POST地址和参数
 	private final static String POST_URL = "/post/index.json";
@@ -109,7 +110,7 @@ public class DanbooruAPILogic {
 		
 		try {			
 			//构建请求		
-			HttpGet httpget = new HttpGet(bean.getImage_url());
+			HttpGet httpget = new HttpGet(BASE_URL_HTTP + bean.getImage_url());
 			ImageFileDownloadHandler fileHandler = new ImageFileDownloadHandler(bean.getImage_fullpath(), bean.getTaskid());
             nRet = httpclient.execute(httpget, fileHandler);
              
